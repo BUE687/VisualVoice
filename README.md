@@ -35,15 +35,15 @@ wget http://dl.fbaipublicfiles.com/VisualVoice/av-speech-separation-model/vocal_
 ```
 ffmpeg -i ./test_videos/interview.mp4 -filter:v fps=fps=25 ./test_videos/interview25fps.mp4
 mv ./test_videos/interview25fps.mp4 ./test_videos/interview.mp4
-python ./utils/detectFaces.py --video_input_path ./test_videos/interview.mp4 --output_path ./test_videos/interview/ --number_of_speakers 2 --scalar_face_detection 1.5 --detect_every_N_frame 8
+python /home/container/VisualVoice/utils/detectFaces.py --video_input_path ./test_videos/interview.mp4 --output_path ./test_videos/interview/ --number_of_speakers 2 --scalar_face_detection 1.5 --detect_every_N_frame 8
 ffmpeg -i ./test_videos/interview.mp4 -vn -ar 16000 -ac 1 -ab 192k -f wav ./test_videos/interview/interview.wav
-python ./utils/crop_mouth_from_video.py --video-direc ./test_videos/interview/faces/ --landmark-direc ./test_videos/interview/landmark/ --save-direc ./test_videos/interview/mouthroi/ --convert-gray --filename-path ./test_videos/interview/filename_input/interview.csv
+python /home/container/VisualVoice/utils/crop_mouth_from_video.py --video-direc ./test_videos/interview/faces/ --landmark-direc ./test_videos/interview/landmark/ --save-direc ./test_videos/interview/mouthroi/ --convert-gray --filename-path ./test_videos/interview/filename_input/interview.csv
 ./
 ```
 
 3. Use the downloaded pre-trained models to test on the demo video.
 ```
-python testRealVideo.py \
+python /home/container/VisualVoice/testRealVideo.py \
 --mouthroi_root ./test_videos/interview/mouthroi/ \
 --facetrack_root ./test_videos/interview/faces/ \
 --audio_path ./test_videos/interview/interview.wav \
@@ -51,7 +51,7 @@ python testRealVideo.py \
 --weights_facial pretrained_models/facial_best.pth \
 --weights_unet pretrained_models/unet_best.pth \
 --weights_vocal pretrained_models/vocal_best.pth \
---lipreading_config_path configs/lrw_snv1x_tcn2x.json \
+--lipreading_config_path /home/container/VisualVoice/configs/lrw_snv1x_tcn2x.json \
 --num_frames 64 \
 --audio_length 2.55 \
 --hop_size 160 \
